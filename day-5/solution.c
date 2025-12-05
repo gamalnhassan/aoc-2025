@@ -1,8 +1,9 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define RANGES_COUNT 174
-#define IDS_COUNT 1000
+#define RANGES_COUNT 20000
+#define IDS_COUNT 1000000
 #define LONG_LEN sizeof(uint64_t) * 8
 
 int compare_ranges(const void *a, const void *b) {
@@ -19,13 +20,13 @@ int main() {
   size_t len = 0;
   ssize_t read;
 
-  uint64_t ranges[RANGES_COUNT][2];
+  uint64_t(*ranges)[2] = malloc(sizeof(uint64_t) * RANGES_COUNT * 2);
   size_t num_ranges = 0;
 
-  uint64_t ids[IDS_COUNT];
+  uint64_t *ids = malloc(sizeof(uint64_t) * IDS_COUNT);
   size_t num_ids = 0;
 
-  fp = fopen("input.txt", "r");
+  fp = fopen("/dev/stdin", "r");
   if (fp == NULL) {
     exit(EXIT_FAILURE);
   }
@@ -63,7 +64,7 @@ int main() {
   uint64_t curr_lo = ranges[0][0];
   uint64_t curr_hi = ranges[0][1];
 
-  uint64_t coalesced_ranges[RANGES_COUNT][2];
+  uint64_t(*coalesced_ranges)[2] = malloc(sizeof(uint64_t) * RANGES_COUNT * 2);
   size_t num_coal_ranges = 0;
 
   uint64_t total_range = 0; // Part 2
@@ -98,6 +99,10 @@ int main() {
       }
     }
   }
+
+  free(ranges);
+  free(ids);
+  free(coalesced_ranges);
 
   printf("Part 1: %zu\n", valid_ids);
   printf("Part 2: %llu\n", total_range);
