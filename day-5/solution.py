@@ -40,5 +40,6 @@ for id in ingredients:
             break
 
 
+print(len(ranges), len(ingredients))
 print(f"Part 1: {len(valid)}")
 print(f"Part 2: {sum([hi - lo + 1 for (lo, hi) in coalesced])}")
