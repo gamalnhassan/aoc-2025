@@ -82,7 +82,7 @@ int main() {
     }
   }
   coalesced_ranges[num_coal_ranges][0] = curr_lo;
-  coalesced_ranges[num_coal_ranges++][1] = curr_lo;
+  coalesced_ranges[num_coal_ranges++][1] = curr_hi;
   total_range += curr_hi - curr_lo + 1;
 
   size_t valid_ids = 0; // Part 1
